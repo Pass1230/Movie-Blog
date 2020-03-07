@@ -1,0 +1,36 @@
+.search {
+    width: 550px;
+    height: 100%;
+    margin: 0 auto;
+    background-color: #f2f2f2;
+    
+}
+
+.search-form-container {
+    //background-color: #1f88be;
+    //background-color: #55acee;
+    background-color: #4183C4;
+
+}
+
+.list-title {
+    // padding-top: 1px;
+    padding-bottom: 5px;
+    font-size: 20px;
+}
+
+.result-items:hover {
+    transform: scale(1.25);
+    transition: 0.4s;
+    border: none;
+    padding-left: 12px;
+    padding-top: 15px;
+    background-color: #bbb;
+}
+
+.result-items {
+    padding-left: 18px;
+    background-color: #f2f2f2;
+    border-bottom: #bbb solid 0.2px;
+}
+
