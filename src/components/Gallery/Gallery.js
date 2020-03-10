@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 
 import Result from './Result';
-import propTypes from 'prop-types';
 
 import { Button, Container, Divider } from 'semantic-ui-react'
 import 'normalize.css';
@@ -55,20 +54,24 @@ class Gallery extends React.Component {
         return (   
             <div>
                 <Container textAlign='center'>
-
                     {/* Grnres button */}
-                    <Button key="0" value="All" onClick={this.handleAll} color="linkedin">All</Button>
+                    <Button key="0" value="All" onClick={this.handleAll} color="blue">All</Button>
                     {
                         this.state.genres.map(genre => {
-                            if (genre.id < 80 && genre.id !== 12)
-                                return <Button key={genre.id} value={genre.id} onClick={this.handleGenre} color="linkedin">{genre.name}</Button>;
+                            console.log(genre)
+                            if (genre.id < 80 && genre.id !== 35 )
+                                return <Button key={genre.id} value={genre.id} onClick={this.handleGenre} color="blue">{genre.name}</Button>;
                         })
                     }
-                    <Divider hidden fitted/>
+                </Container>
                     
                     {/* Movie images */}
-                    {this.state.all === true? <Result movies={this.props.movies} />:<Result movies={this.state.movies} />}
-                </Container>
+                    <div className="gallery-result">
+                        <Container textAlign='center'>
+                        {this.state.all === true? <Result movies={this.props.movies} />:<Result movies={this.state.movies} />}
+                        </Container>
+                    </div>
+                
                 
             </div>       
         );
@@ -76,10 +79,6 @@ class Gallery extends React.Component {
 }
 
 export default Gallery;
-
-Gallery.propTypes = {
-    movies: propTypes.arrayOf.isRequired
-};
 
 Gallery.defaultProps = {
     genre: []

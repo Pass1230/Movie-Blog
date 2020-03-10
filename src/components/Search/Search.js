@@ -12,7 +12,8 @@ class Search extends React.Component {
         this.state = {
             movies: [],
             ascending: true,
-            sortByTitle: false
+            sortByTitle: false,
+            newState: true
         }
         this.handleTitle = this.handleTitle.bind(this);
         this.handleSort = this.handleSort.bind(this);
@@ -26,41 +27,69 @@ class Search extends React.Component {
         const filterTitle = this.props.movies.filter(movie => 
             movie.title.toLowerCase().includes(value.toLowerCase())
         );
-        this.setState({ movies: filterTitle });
+        this.setState({ movies: filterTitle, newState: false });
     }
 
     // Sort movies by title or by date
-    handleSort(event) {        
+    handleSort(event) {     
         let sorted = [];
-
+        console.log(this.props.movies)
         // Sort by title
         if (event.target.value === "title") {
-            sorted = this.state.movies.sort((a, b) => {
-                return a.title.localeCompare(b.title);
-            });
-            this.setState({ 
-                movies: sorted, 
-                ascending: true,
-                sortByTitle: true
-             });
+            if(!this.state.newState) {
+                sorted = this.state.movies.sort((a, b) => {
+                    return a.title.localeCompare(b.title);
+                });
+                this.setState({ 
+                    movies: sorted, 
+                    ascending: true,
+                    sortByTitle: true,
+                    newState: false
+                 });
+            }
+            else {
+                sorted = this.props.movies.sort((a, b) => {
+                    return a.title.localeCompare(b.title);
+                });
+                this.setState({ 
+                    movies: sorted, 
+                    ascending: true,
+                    sortByTitle: true,
+                    newState: false
+                 });
+            }
         }
 
         // Sort by date
-        else {sorted = this.state.movies.sort((a, b) => {
-                return a.release_date.localeCompare(b.release_date);
-            });
-            this.setState({ 
-                movies: sorted, 
-                ascending: true,
-                sortByTitle: false
-             });
+        else {
+            if (!this.state.newState) {
+                sorted = this.state.movies.sort((a, b) => {
+                    return a.release_date.localeCompare(b.release_date);
+                });
+                this.setState({ 
+                    movies: sorted, 
+                    ascending: true,
+                    sortByTitle: false,
+                    newState: false
+                 });
+            }
+            else {
+                sorted = this.props.movies.sort((a, b) => {
+                    return a.release_date.localeCompare(b.release_date);
+                });
+                this.setState({ 
+                    movies: sorted, 
+                    ascending: true,
+                    sortByTitle: false,
+                    newState: false
+                 });
+            }
         }
     }
 
     // Sort movies by title or by date in ascending order
     handleAscend() {
         let sorted = [];
-
         // Sort by title
         if(this.state.sortByTitle) {
             sorted = this.state.movies.sort((a, b) => {
@@ -72,12 +101,13 @@ class Search extends React.Component {
         else sorted = this.state.movies.sort((a, b) => {
             return a.release_date.localeCompare(b.release_date);  
         });
-        this.setState({ movies: sorted, ascending: true })
+        this.setState({ movies: sorted, ascending: true, newState: false })
     }
 
     // Sort movies by title or by date in descending order
     handleDescend() {
-        let sorted = [];
+        if (!this.state.newState) {
+            let sorted = [];
 
         // Sort by title
         if(this.state.sortByTitle) {
@@ -88,10 +118,10 @@ class Search extends React.Component {
 
         // Sort by date
         else sorted = this.state.movies.sort((a, b) => {
-
             return b.release_date.localeCompare(a.release_date);  
         });
-        this.setState({ movies: sorted, ascending: false })
+        this.setState({ movies: sorted, ascending: false, newState: false })
+        }
     }
 
     render() {
@@ -99,17 +129,21 @@ class Search extends React.Component {
             <form className="search">
                 <Container textAlign='center' className="search-form-container">
                     <Divider hidden />
-
                     <input type="text" 
-                           placeholder="title" 
+                           placeholder="Enter Keyword" 
                            onChange={this.handleTitle}
+                           className="input"
                     ></input>
-                    <select onChange={this.handleSort}>
-                        <option>Select</option>
+                    <br />
+                    <Divider hidden fitted />
+                    {/* <label className="label" textAlign='justify'>Order by</label> */}
+                    <Divider hidden fitted />
+                    <select onChange={this.handleSort} className="select">
+                        <option>Order by</option>
                         <option value="title">Title</option>
                         <option value="date">Date</option>
                     </select>                   
-                    <br />
+                    <Divider hidden fitted />
 
                     <label>
                         <input type="radio"
@@ -117,20 +151,22 @@ class Search extends React.Component {
                             value="asending"
                             checked={this.state.ascending}
                             onChange={this.handleAscend}
+                            className="radio"
                         /> asending
                     </label>
-                    <br />
                     <label>
                         <input type="radio"
                             name="sorting"
                             value="desending"
                             checked={!this.state.ascending}
                             onChange={this.handleDescend}
+                            className="radio"
                         /> desending
                     </label>
                     <Divider hidden />
                 </Container>
-                <Result movies={this.state.movies} />
+                {this.state.newState ? <Result movies={this.props.movies} /> : <Result movies={this.state.movies} />}
+                
             </form>            
         )
     }

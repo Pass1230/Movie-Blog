@@ -1,12 +1,12 @@
 import React from "react";
 
+import './style.scss';
+
 class Header extends React.Component {
     
     render () {
         return (
-            <div>
-                <h1>The Movie Database Search</h1>
-            </div>
+            <h1>Top 500 Popular Movies Gallery</h1>
         )
     }
 }

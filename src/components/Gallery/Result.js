@@ -11,7 +11,7 @@ class Result extends React.Component {
 
     render() {
         return(
-            <div>
+            <div className="gallery-result">
                 <Image.Group size='small'>
                     {
                         this.props.movies.map(movie => {
@@ -20,6 +20,7 @@ class Result extends React.Component {
                                     <Link key={movie.id} to={"/movie/" + movie.rank}>
                                         <Image className="gallery-img" src={movie.img} size='medium'/>
                                     </Link>
+                                    
                                 )
                             }
                         })
