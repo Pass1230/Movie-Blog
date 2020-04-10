@@ -1,6 +1,6 @@
 Link: https://pass1230.gitlab.io/mp.<br />
 
-## CS 498 RK
+## CS 498 RK: The Art and Science of Web Programming
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
